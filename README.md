@@ -1,12 +1,12 @@
 # PaperSearchQA
 
-[![Paper](https://img.shields.io/badge/arXiv-2601.18207-b31b1b)](https://arxiv.org/abs/2601.18207)
-[![Website](https://img.shields.io/badge/Website-jmhb0.github.io-blue)](https://jmhb0.github.io/PaperSearchQA/)
-[![Dataset](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/collections/jmhb/papersearchqa)
+[![Paper](https://img.shields.io/badge/arXiv-2601.18207-b31b1b)](https://arxiv.org/abs/XXXXX)
+[![Website](https://img.shields.io/badge/Website-jmhb0.github.io-blue)](https://joonv2.github.io/DrawingVQA/)
+[![Dataset](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/datasets/joonv2/DrawingVQA)
 
-**[EACL 2026]** A reinforcement learning environment for training AI agents to autonomously search and reason over scientific literature.
+**[CVPR 2026 Findings]** DrawingVQA: .
 
-**Paper**: [PaperSearchQA: Learning to Search and Reason over Scientific Papers with RLVR](https://arxiv.org/abs/2601.18207)
+**Paper**: [DrawingVQA: A Real-World Benchmark for Multi-Depth Visual–Textual Reasoning on Construction Drawings](https://arxiv.org/abs/XXXXX)
 
 The paper's main contribution is RL training environments: a data generation pipeline for creating Q&As from scientific biomedical paper abstracts; and a retrieval corpus of paper abstracts. We train a search agent in this environment, and show that it generalizes to the [BioASQ](https://huggingface.co/datasets/jmhb/BioASQ) benchmark. The data-generation ideas should generalize to non-biomedical papers as well.
 
