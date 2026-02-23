@@ -1,4 +1,4 @@
-# PaperSearchQA
+# DrawingVQA
 
 [![Paper](https://img.shields.io/badge/arXiv-2601.18207-b31b1b)](https://arxiv.org/abs/XXXXX)
 [![Website](https://img.shields.io/badge/Website-jmhb0.github.io-blue)](https://joonv2.github.io/DrawingVQA/)
