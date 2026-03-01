@@ -1,0 +1,33 @@
+<svg width="960" height="620" viewBox="0 0 960 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="620" rx="32" fill="#0F2740"/>
+  <rect x="56" y="88" width="238" height="444" rx="24" fill="#173A5B"/>
+  <rect x="360" y="88" width="238" height="444" rx="24" fill="#FFFFFF" fill-opacity="0.92"/>
+  <rect x="664" y="88" width="238" height="444" rx="24" fill="#BA4D20"/>
+  <path d="M318 310H340" stroke="#FFD6B4" stroke-width="14" stroke-linecap="round"/>
+  <path d="M622 310H644" stroke="#FFD6B4" stroke-width="14" stroke-linecap="round"/>
+  <path d="M328 298L344 310L328 322" stroke="#FFD6B4" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M632 298L648 310L632 322" stroke="#FFD6B4" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="88" y="128" width="174" height="90" rx="16" fill="#274B6B"/>
+  <rect x="88" y="246" width="174" height="90" rx="16" fill="#274B6B"/>
+  <rect x="88" y="364" width="174" height="90" rx="16" fill="#274B6B"/>
+  <rect x="392" y="128" width="174" height="90" rx="16" fill="#F6E1CF"/>
+  <rect x="392" y="246" width="174" height="90" rx="16" fill="#F6E1CF"/>
+  <rect x="392" y="364" width="174" height="90" rx="16" fill="#F6E1CF"/>
+  <rect x="696" y="152" width="174" height="64" rx="16" fill="#FFD6B4"/>
+  <rect x="696" y="240" width="174" height="64" rx="16" fill="#FFD6B4"/>
+  <rect x="696" y="328" width="174" height="64" rx="16" fill="#FFD6B4"/>
+  <rect x="696" y="416" width="174" height="64" rx="16" fill="#FFD6B4"/>
+  <text x="112" y="78" fill="#FFD6B4" font-family="Arial, sans-serif" font-size="32" font-weight="700">Input</text>
+  <text x="414" y="78" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="32" font-weight="700">Core Method</text>
+  <text x="716" y="78" fill="#FFF7ED" font-family="Arial, sans-serif" font-size="32" font-weight="700">Output</text>
+  <text x="92" y="186" fill="#FFF7ED" font-family="Arial, sans-serif" font-size="26" font-weight="700">Dataset</text>
+  <text x="92" y="304" fill="#FFF7ED" font-family="Arial, sans-serif" font-size="26" font-weight="700">Annotations</text>
+  <text x="92" y="422" fill="#FFF7ED" font-family="Arial, sans-serif" font-size="26" font-weight="700">Preprocess</text>
+  <text x="406" y="186" fill="#7A3A19" font-family="Arial, sans-serif" font-size="26" font-weight="700">Encoder</text>
+  <text x="406" y="304" fill="#7A3A19" font-family="Arial, sans-serif" font-size="26" font-weight="700">Fusion</text>
+  <text x="406" y="422" fill="#7A3A19" font-family="Arial, sans-serif" font-size="26" font-weight="700">Reasoning Head</text>
+  <text x="718" y="194" fill="#19354F" font-family="Arial, sans-serif" font-size="24" font-weight="700">Main Table</text>
+  <text x="718" y="282" fill="#19354F" font-family="Arial, sans-serif" font-size="24" font-weight="700">Qualitative</text>
+  <text x="718" y="370" fill="#19354F" font-family="Arial, sans-serif" font-size="24" font-weight="700">Ablations</text>
+  <text x="718" y="458" fill="#19354F" font-family="Arial, sans-serif" font-size="24" font-weight="700">Demo</text>
+</svg>

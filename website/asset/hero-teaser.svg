@@ -1,0 +1,22 @@
+<svg width="960" height="720" viewBox="0 0 960 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="720" rx="40" fill="#FAF2E4"/>
+  <rect x="44" y="44" width="872" height="632" rx="28" fill="#19354F"/>
+  <rect x="88" y="94" width="338" height="216" rx="18" fill="#244B6D"/>
+  <rect x="456" y="94" width="416" height="216" rx="18" fill="#FFF7ED"/>
+  <rect x="88" y="344" width="256" height="288" rx="18" fill="#FFF7ED"/>
+  <rect x="374" y="344" width="214" height="288" rx="18" fill="#244B6D"/>
+  <rect x="618" y="344" width="254" height="288" rx="18" fill="#BA4D20"/>
+  <circle cx="194" cy="202" r="58" fill="#FFD6B4"/>
+  <path d="M514 160H812" stroke="#BA4D20" stroke-width="18" stroke-linecap="round"/>
+  <path d="M514 208H760" stroke="#D7A685" stroke-width="18" stroke-linecap="round"/>
+  <path d="M514 256H694" stroke="#E6C2A9" stroke-width="18" stroke-linecap="round"/>
+  <path d="M128 402H304" stroke="#D7A685" stroke-width="16" stroke-linecap="round"/>
+  <path d="M128 444H270" stroke="#D7A685" stroke-width="16" stroke-linecap="round"/>
+  <path d="M128 520L176 474L220 520L290 438" stroke="#BA4D20" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M418 408H542" stroke="#FFD6B4" stroke-width="16" stroke-linecap="round"/>
+  <path d="M418 456H528" stroke="#FFD6B4" stroke-width="16" stroke-linecap="round"/>
+  <path d="M418 504H508" stroke="#FFD6B4" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="744" cy="488" r="70" fill="#FFD6B4"/>
+  <path d="M712 488L736 512L784 462" stroke="#19354F" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="90" y="654" fill="#FFF7ED" font-family="Arial, sans-serif" font-size="36" font-weight="700">Teaser / Figure / Video Placeholder</text>
+</svg>
