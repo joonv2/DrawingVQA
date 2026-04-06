@@ -93,7 +93,7 @@ mapping = {
     r["image_name"]: hash_name(r["image_name"]) for r in raw_data if r.get("image_name")
 }
 
-with open("00_private_image_name_mapping.json", "w") as f:
+with open("./huggingface/00_private_image_name_mapping.json", "w") as f:
     json.dump(mapping, f, indent=2)
 print("  Saved private image name mapping to 00_private_image_name_mapping.json")
 
