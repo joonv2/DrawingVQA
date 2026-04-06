@@ -6,12 +6,12 @@ from datasets import Dataset, Features, Value, Sequence
 # STEP 1: CONFIGURATION — Edit these values
 # ============================================================
 
-HF_USERNAME  = "junryuf2"
+HF_USERNAME  = "S2-MIND"
 DATASET_NAME = "DrawingVQA"
 REPO_ID      = f"{HF_USERNAME}/{DATASET_NAME}"
 
 # Path to your JSON file (list of question objects)
-DATA_FILE = "00_DrawingVQA_data.json"
+DATA_FILE = "huggingface/00_DrawingVQA_data.json"
 
 
 # ============================================================
@@ -46,6 +46,16 @@ def hash_name(name):
         return None
     return hashlib.sha256(name.encode()).hexdigest()[:16]
 
+def as_list(value):
+    # If already a list, return as-is.
+    # If a bare string, wrap it — avoids Python iterating chars ("ocr" → ["o","c","r"]).
+    # If None/missing, return empty list.
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    return [value]
+
 def normalize(record):
     options = record.get("options") or {}
     # If options was stored as a JSON string instead of a dict, parse it
@@ -69,11 +79,11 @@ def normalize(record):
         "option_d":         options.get("D"),
         "answer":           record.get("answer"),
         "explanation":      record.get("explanation"),
-        # cv_field is a list — kept as a list column
-        "cv_field":         record.get("cv_field") or [],
-        "cv_subfield":      record.get("cv_subfield"),
-        "ce_field":         record.get("ce_field"),
-        "ce_subfield":      record.get("ce_subfield"),
+        # These are all list fields — wrap bare strings to avoid char-iteration
+        "cv_field":         as_list(record.get("cv_field")),
+        "cv_subfield":      as_list(record.get("cv_subfield")),
+        "ce_field":         as_list(record.get("ce_field")),
+        "ce_subfield":      as_list(record.get("ce_subfield")),
         "topic_difficulty": record.get("topic_difficulty"),
         "question_type":    record.get("question_type"),
     }
@@ -113,9 +123,9 @@ features = Features({
     "answer":           Value("string"),
     "explanation":      Value("string"),
     "cv_field":         Sequence(Value("string")),
-    "cv_subfield":      Value("string"),
-    "ce_field":         Value("string"),
-    "ce_subfield":      Value("string"),
+    "cv_subfield":      Sequence(Value("string")),
+    "ce_field":         Sequence(Value("string")),
+    "ce_subfield":      Sequence(Value("string")),
     "topic_difficulty": Value("string"),
     "question_type":    Value("string"),
 })
