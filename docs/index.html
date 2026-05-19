@@ -8,13 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DrawingVQA: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings</title>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
@@ -416,6 +409,27 @@
             <li><strong>Parametric Knowledge Bias:</strong> Models often over-rely on training priors. For example, if a standard weld symbol is intentionally removed from an adversarial drawing, the model still hallucinates the standard procedure rather than reading the explicit visual syntax.</li>
             <li><strong>Attention Misalignment:</strong> Visual attention maps reveal that models often look at irrelevant regions (like the wrong grid labels) while generating text for specific structural elements, indicating spatial reasoning hallucinations.</li>
             </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-4">Explore the Benchmark</h2>
+        <div class="content">
+
+          <article class="message is-warning">
+            <div class="message-body">
+              <strong>Data Privacy Notice:</strong> Due to privacy constraints regarding real-world "Issued for Construction" documents, the original drawing images are not fully open to the public. However, the complete <strong>question set (text)</strong> is publicly available under CC BY-NC-SA 4.0. Researchers can still perform benchmark evaluations using our HuggingFace repository.
+            </div>
+          </article>
+
+          <iframe
+            src="https://huggingface.co/datasets/S2-MIND/DrawingVQA/embed/viewer"
+            frameborder="0" width="100%" style="height:600px; border-radius:6px;"></iframe>
+
         </div>
       </div>
     </div>
