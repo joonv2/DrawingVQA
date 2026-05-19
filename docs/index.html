@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="DRAWINGVQA: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings">
+  <meta name="keywords" content="DrawingVQA, VQA, Construction Drawings, MLLM, Engineering, Civil Engineering">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DrawingVQA: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+  /* Make swiper1 wider */
+  .mySwiper1, .mySwiper2 {
+    width: 80% !important;
+    max-width: 1200px !important;
+    margin: 0 auto 30px auto;
+  }
+  /* Make sure the images inside maintain proper aspect ratio */
+  .mySwiper1 .swiper-slide img, .mySwiper2 .swiper-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin: 24px auto;
+    max-width: 1000px;
+  }
+
+  .stat-card {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #209cee;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.82rem;
+    color: #555;
+    margin-top: 4px;
+  }
+
+  /* ── Reasoning depth cards ── */
+  .depth-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .depth-card {
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #ddd;
+  }
+
+  .depth-card.r1 { background: #e8f4f8; border-left: 4px solid #5bc0de; }
+  .depth-card.r2 { background: #fef9e7; border-left: 4px solid #f0ad4e; }
+  .depth-card.r3 { background: #fdf2f8; border-left: 4px solid #c0392b; }
+
+  .depth-card .stars { font-size: 1.1rem; margin-bottom: 4px; }
+  .depth-card .depth-title { font-weight: 700; margin-bottom: 6px; }
+
+  /* Leaderboard Sub-Row formatting */
+  .sub-row { text-align: left; padding-left: 40px !important; color: #555; }
+  .group-reasoning { background-color: #d9edf7; }
+  .group-mllm     { background-color: #dff0d8; }
+  .group-ce       { background-color: #fcf8e3; }
+  </style>
+</style>
+
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-2 publication-title">DrawingVQA: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings</h1>
+            <h3 class="title is-4">CVPR Findings 2026</h3>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://joonv2.github.io/">Yoonhwa Jung</a>*<sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://junryuf2.github.io/mywebsite/">Junryu Fu</a>*<sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="https://raamac.cee.illinois.edu/">Mani Golparvar-Fard</a><sup>3</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Louisiana State University,</span>
+              <span class="author-block"><sup>2</sup>Independent Researcher,</span>
+              <span class="author-block"><sup>3</sup>University of Illinois Urbana-Champaign</span>
+            </div>
+
+            <div class="is-size-6 publication-authors mt-2">
+              <span class="author-block">*Equal contribution</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/S2-MIND/DrawingVQA"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fa-solid fa-database"></i>
+                    </span>
+                    <span>Benchmark</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://joonv2.github.io/DrawingVQA/" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Project Page</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#testing-mllms" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fa-solid fa-trophy"></i>
+                    </span>
+                    <span>Leaderboard</span>
+                  </a>
+                </span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <h2 class="subtitle has-text-centered">
+          <p class="mt-4">Civil and construction engineering heavily depend on construction drawings—dense, multi-layered visual artifacts. We introduce <span
+              class="has-text-info"><b>DrawingVQA</b>, the first benchmark designed to evaluate multimodal large language models (MLLMs) on real-world "Issued for Construction" (IFC) drawings.</span></p>
+        </h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">92</div>
+            <div class="stat-label">Expert QA Pairs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">33</div>
+            <div class="stat-label">Unique IFC Drawings</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Reasoning Depths</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">7</div>
+            <div class="stat-label">CE Domain Dimensions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">4</div>
+            <div class="stat-label">MLLM Capability Axes</div>
+          </div>
+        </div>
+
+        <div class="has-text-centered">
+          <img src="./static/images/figure1_teaser.png" style="width: 100%; max-width: 900px; height: auto;"
+            alt="DrawingVQA Deconstructing IFC Drawing Complexity." />
+        </div>
+      </div>
+      <div class="content">
+        <h3>Contributions:</h3>
+        <ul>
+          <li><i class="fas fa-drafting-compass"></i> <strong>First Authentic Domain Data:</strong> The first VQA benchmark built on complex, real-world "Issued for Construction" (IFC) structural drawings, packed with abstract geometry, symbolic notation, and tabular data.</li>
+          <li><i class="fas fa-hard-hat"></i> <strong>Practical Questioning by Domain Experts:</strong> The first benchmark to capture how engineers reason across visual, textual, and spatial modalities in professional workflows. The question-answer (QA) pairs are crafted by three construction engineers to resemble day-to-day queries, moving beyond surface-level academic questions.</li>
+          <li><i class="fas fa-layer-group"></i> <strong>Dual Categorization Framework:</strong> We explicitly link professional engineering workflows to core AI reasoning competencies, enabling multidimensional analysis of model strengths and failures.</li>
+          <li><i class="fas fa-chart-line"></i> <strong>Expert-Level Baseline:</strong> We provide a comprehensive analysis highlighting a critical gap: while frontier models approach entry-level competency, they still fall substantially short of true professional engineering expertise.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-4">The Complexity of IFC Drawings</h2>
+
+        <div class="content">
+          <p>
+            Unlike schematic floor plans or standard natural images, an IFC drawing spans the entire project lifecycle as a "source of truth." It integrates precise geometry, engineering annotations, material specifications, and regulatory compliance notes. DrawingVQA tests MLLMs on these unique multimodal challenges:
+          </p>
+          <ul>
+            <li><strong>Complex Geometries:</strong> Precise 2D representations (plans, sections, elevations) of structural elements.</li>
+            <li><strong>Symbolic Language:</strong> Weld symbols, material hatches, and discipline-specific acronyms.</li>
+            <li><strong>Dense Annotations:</strong> Textual and symbolic callouts with arrows requiring high-fidelity OCR.</li>
+            <li><strong>Data-Rich Tables:</strong> Complex tabular schedules for columns, beams, and footings.</li>
+            <li><strong>Cross-References:</strong> Pointers requiring a model to align information across different dimensional views and details.</li>
+          </ul>
+        </div>
+        <figure class="has-text-centered" style="center;">
+          <img src="./static/images/ifc_complex_geometries.png" style="width: 70%; max-width: 800px; height: auto;" alt="Complex Geometries">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-4">Three Progressive Reasoning Depths</h2>
+        <div class="content">
+          <p>
+            Every QA pair in DrawingVQA is classified into one of three reasoning levels that mirror <strong>how engineers
+            progressively reason from perception to professional judgment</strong>:
+          </p>
+
+          <div class="depth-cards">
+            <div class="depth-card r1">
+              <div class="stars">★</div>
+              <div class="depth-title">R1 — Perceptual Understanding</div>
+              <p style="font-size:0.88em;">Simple, direct questions requiring visual search or basic OCR.
+                <em>Example: "What is the sheet title?"</em>
+              </p>
+              <div style="font-size:0.82em; color:#555;">37% of questions</div>
+            </div>
+            <div class="depth-card r2">
+              <div class="stars">★★</div>
+              <div class="depth-title">R2 — Contextual Interpretation</div>
+              <p style="font-size:0.88em;">Connecting and reasoning across multiple pieces of information on a single sheet.
+                <em>Example: "What is the top of the footing elevation for F7x13.83 along grid line 24?"</em>
+              </p>
+              <div style="font-size:0.82em; color:#555;">34% of questions</div>
+            </div>
+            <div class="depth-card r3">
+              <div class="stars">★★★</div>
+              <div class="depth-title">R3 — Domain-Expert Reasoning</div>
+              <p style="font-size:0.88em;">Compositional reasoning, implicit domain knowledge, and cross-drawing alignment.
+                <em>Example: "What type of vertical reinforcements would I need for the walls shown? Use the other drawing if needed."</em>
+              </p>
+              <div style="font-size:0.82em; color:#555;">29% of questions</div>
+            </div>
+          </div>
+
+          <p>
+            R3 is the clearest bottleneck: scores collapse dramatically for all models at this level. In contrast,
+            experienced human Professionals actually score <em>highest</em> at R3 (93.3), revealing where AI and
+            true domain expertise diverge most sharply.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero" id="dual-framework">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-4">Dual Categorization Framework</h2>
+
+        <div class="content">
+          <p>To analyze model performance with high granularity, we mapped every QA pair across two orthogonal axes. This allows us to move beyond a single accuracy score and precisely diagnose why a model fails for engineering workflows.</p>
+
+          <div class="swiper mySwiper1">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="static/images/figure3_dual_categorization.png" alt="Dual categorization mapping MLLM Capabilities to Construction-Engineering Dimensions">
+              </div>
+              <div class="swiper-slide">
+                <img src="static/images/map_result.png" alt="Dual categorization mapping MLLM Capabilities to Construction-Engineering Dimensions">
+              </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <table class="dual-table">
+            <thead>
+              <tr>
+                <th style="width:30%">Axis</th>
+                <th>Dimensions</th>
+                <th style="width:38%">Primary Dependencies</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MLLM Capability</strong><br><em>("The AI Task")</em></td>
+                <td>Visual Perception · Knowledge · Reasoning (Visual / Alignment / Spatial) · OCR</td>
+                <td>Maps to foundational AI competencies required to solve each question</td>
+              </tr>
+              <tr>
+                <td><strong>Construction Engineering</strong><br><em>("The Practical Task")</em></td>
+                <td>General/Admin · Element Identification · Language Understanding · Dimensional Recognition · Design Semantic Understanding · QTO · Compliance</td>
+                <td>Maps to real-world engineering workflows performed on job sites daily</td>
+              </tr>
+            </tbody>
+          </table>
+        <p><strong>Task Heterogeneity:</strong> A single optimization strategy is insufficient. Distinct construction tasks require targeted multimodal improvements:</p>
+        <ul>
+          <li><strong>Administrative Tasks:</strong> Rely heavily on OCR and Visual Perception to read explicit information.</li>
+          <li><strong>Technical Tasks (Element Identification &amp; Cross-Referencing):</strong> Shift towards complex spatial, visual, and alignment Reasoning.</li>
+          <li><strong>Quantity Take-Off (QTO):</strong> Highly sensitive to OCR and visual alignment errors, struggling to ground text within complex geometries.</li>
+          <li><strong>Compliance:</strong> Requires external domain knowledge beyond what is explicitly drawn.</li>
+        </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="hero" id="testing-mllms">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-4">Leaderboard: SOTA vs. Human Experts</h2>
+        <div class="content">
+          <p>We benchmarked leading proprietary and open-source models against a robust human baseline comprising Undergraduates, Graduate/Young Professionals, and Experienced Professionals.</p>
+
+          <iframe src="static/leaderboard/leaderboard.html" width="100%" height="550px" style="border: none;"></iframe>
+
+          <ul class="content">
+            <li><strong>The Expertise Gap:</strong> Only Gemini-3-pro-preview (77.2%) and Gemini-2.5-pro (71.7%) surpassed the Undergraduate baseline (62.8%). However, all models fall substantially short of Experienced Professionals (94.9%).</li>
+            <li><strong>Expert Reasoning (R3) Bottleneck:</strong> While models score well on basic perception (R1), their performance collapses on R3 tasks requiring deep domain-specific inference, unlike human professionals who peak on these tasks.</li>
+            <li><strong>Quantity Take-Off (QTO) Failures:</strong> QTO remains a major challenge for all MLLMs due to limitations in precise spatial grounding and counting in dense engineering drawings.</li>
+            <li><strong>Vision is Indispensable:</strong> Our text-only ablation study caused a significant performance collapse, confirming the benchmark relies heavily on grounded visual understanding, not just linguistic priors.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-4">Where do MLLMs go wrong?</h2>
+
+        <div class="content">
+          <p><strong class="has-text-info">Understanding Error Modes.</strong>
+            We extracted the Chain-of-Thought (CoT) responses to investigate how models derail during complex engineering workflows.
+          </p>
+
+          <div class="swiper mySwiper2">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="./static/images/error_visual_perception.png"
+                  alt="Visual Perception and Visual Grounding Error">
+              </div>
+              <div class="swiper-slide">
+                <img src="./static/images/error_reasoning.png"
+                  alt="Reasoning and perception error on reading sub-drawings">
+              </div>
+              <div class="swiper-slide">
+                <img src="./static/images/error_parametric_bias.png"
+                  alt="Parametric Bias vs Visual Grounding">
+              </div>
+              <div class="swiper-slide">
+                <img src="./static/images/visual_attention.png"
+                  alt="Visual Attention Misalignment">
+              </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+
+          <ul class="content">
+            <li><strong>Visual Grounding Failures:</strong> A common failure occurs when the model's reasoning plan is logically sound, but its visual perception derails (e.g., misidentifying a grid line while tracing).</li>
+            <li><strong>Reasoning Errors:</strong> Models struggle with the abstract nature of engineering sub-drawings and frequently misunderstand the type of view presented (e.g., mistaking a detail plan view for a section or elevation view)[cite: 1038, 1039, 1097]. This lack of spatial and contextual comprehension can also cause models to hallucinate physical connections between adjacent but entirely separate structural details[cite: 1040, 1041, 1042].</li>
+            <li><strong>Cross-Referencing Breakdowns:</strong> When searching across multiple details for a governing reference, models often anchor to the first plausible link and fail to perform a complete visual scan.</li>
+            <li><strong>Parametric Knowledge Bias:</strong> Models often over-rely on training priors. For example, if a standard weld symbol is intentionally removed from an adversarial drawing, the model still hallucinates the standard procedure rather than reading the explicit visual syntax.</li>
+            <li><strong>Attention Misalignment:</strong> Visual attention maps reveal that models often look at irrelevant regions (like the wrong grid labels) while generating text for specific structural elements, indicating spatial reasoning hallucinations.</li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    <pre><code>@inproceedings{jung2026drawingvqa,
+      title={{DrawingVQA}}: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings},
+      author={Yoonhwa Jung and Junryu Fu and Mani Golparvar-Fard},
+      year={2026},
+      booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Findings},
+      note ={In press}
+}</code></pre>
+  </div>
+</section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              The template for this page is heavily inspired by <a href="https://nerfies.github.io/">Nerfies</a> and the <a href="https://jmhb0.github.io/microvqa/">MicroVQA</a> project page. If you reuse
+              this <a href="https://github.com/nerfies/nerfies.github.io">code</a>, please link to their respective sites.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var swiper1 = new Swiper(".mySwiper1", {
+      loop: true,
+      pagination: {
+        el: ".mySwiper1 .swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".mySwiper1 .swiper-button-next",
+        prevEl: ".mySwiper1 .swiper-button-prev",
+      },
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: true,
+      },
+    });
+
+    var swiper2 = new Swiper(".mySwiper2", {
+      loop: true,
+      pagination: {
+        el: ".mySwiper2 .swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".mySwiper2 .swiper-button-next",
+        prevEl: ".mySwiper2 .swiper-button-prev",
+      },
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: true,
+      },
+    });
+  </script>
+
+</body>
+</html>
