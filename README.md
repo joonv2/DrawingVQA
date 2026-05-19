@@ -79,7 +79,7 @@ For the full leaderboard and fine-grained dual-category breakdowns, visit our [P
 
 ## 📝 Citation
 
-If you use DRAWINGVQA in your research, please cite our CVPR 2025 paper:
+If you use DRAWINGVQA in your research, please cite our CVPR 2026 paper:
 
 ```bibtex
 @inproceedings{jung2025drawingvqa,
