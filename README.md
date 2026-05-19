@@ -1,167 +1,99 @@
-# DrawingVQA
+# DRAWINGVQA
 
-[![Paper](https://img.shields.io/badge/arXiv-2601.18207-b31b1b)](https://arxiv.org/abs/XXXXX)
-[![Website](https://img.shields.io/badge/Website-jmhb0.github.io-blue)](https://joonv2.github.io/DrawingVQA/)
-[![Dataset](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/datasets/joonv2/DrawingVQA)
+[![Paper](https://img.shields.io/badge/arXiv-Coming_Soon-b31b1b)](#)
+[![Website](https://img.shields.io/badge/Project_Page-joonv2.github.io-blue)](https://joonv2.github.io/DrawingVQA/)
+[![Dataset](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/datasets/S2-MIND/DrawingVQA)
 
-**[CVPR 2026 Findings]** DrawingVQA: .
+**[CVPR Findings 2026]** DrawingVQA: A Real-World Benchmark for Multi-Depth Visual–Textual Reasoning on Construction Drawings.
 
-**Paper**: [DrawingVQA: A Real-World Benchmark for Multi-Depth Visual–Textual Reasoning on Construction Drawings](https://arxiv.org/abs/XXXXX)
+**Authors**: Yoonhwa Jung*, Junryu Fu*, Mani Golparvar-Fard
+(*Equal contribution)
 
-The paper's main contribution is RL training environments: a data generation pipeline for creating Q&As from scientific biomedical paper abstracts; and a retrieval corpus of paper abstracts. We train a search agent in this environment, and show that it generalizes to the [BioASQ](https://huggingface.co/datasets/jmhb/BioASQ) benchmark. The data-generation ideas should generalize to non-biomedical papers as well.
+**Paper**: [Link to arXiv (Coming Soon)](#)
 
-- **`data_generation/`** - Scalable pipeline for generating Q&A pairs from scientific abstracts using GPT-4.1. Includes corpus processing, question generation, golden answer creation, and paraphrasing (~$150-230 for 60K examples).
+DrawingVQA is the first benchmark designed to evaluate multimodal large language models (MLLMs) on real-world "Issued for Construction" (IFC) structural drawings. Unlike standard natural images or simplified schematic floor plans, this dataset fuses abstract geometry, symbolic notation, tabular data, annotations, and domain-specific text, reflecting authentic engineering workflows.
 
-- **`baselines/`** - Baseline implementations (RAG, CoT, SearchR1) with inference scripts and evaluation code.
+---
 
-- **`search-r1/`** - Retrieval infrastructure from [Search-R1](https://github.com/PeterGriffinJin/Search-R1): BM25/dense retrieval servers, veRL training framework, and data processing utilities.
+## 🏗️ Benchmark Highlights
 
-## Quick Start
+* **Authentic Domain Data**: 33 full IFC-grade structural drawings and 92 expertly curated QA pairs.
+* **Three Reasoning Depths**: Questions are categorized into Perceptual Understanding (R1), Contextual Interpretation (R2), and Domain-Expert Reasoning (R3).
+* **Dual Categorization Framework**: The first benchmark to explicitly map engineering workflows (QTO, Compliance, etc.) to core AI reasoning competencies (OCR, Visual Perception, Spatial Reasoning).
+* **Expert-Level Baselines**: Compares frontier models (Gemini 2.5 Pro, GPT-4o, Claude 3.5 Sonnet, Qwen-VL) against robust human baselines (Undergraduates, Young Professionals, and Experienced Professionals). 
+
+---
+
+## 🚀 Quick Start
+
+The dataset is hosted on Hugging Face. You do not need to download local images, as all the text and QA structure is available directly via the `datasets` library.
 
 ### Installation
 
 ```bash
-git clone https://github.com/your-org/PaperSearchQA.git
-cd PaperSearchQA
-pip install -r requirements.txt
-```
-
-### Load Dataset
-
-The generated data is available on HuggingFace:
-
-```python
+pip install datasets
 from datasets import load_dataset
 
-# Load training and test sets
-dataset = load_dataset("jmhb/PaperSearchQA")
+# Load the benchmark split
+dataset = load_dataset("S2-MIND/DrawingVQA", split="benchmark")
+
+# View the first example
+print(dataset[0])
 ```
+---
 
-We also re-release the [BioASQ](http://bioasq.org/) data on HuggingFace, which is a good test of generalization (please cite them if you use it):
+## 📊 Dataset Structure
 
-```python
-# Load BioASQ factoid questions for out-of-distribution evaluation
-bioasq = load_dataset("jmhb/BioASQ", "factoid")
-```
+Each record in the dataset is flattened and normalized for easy downstream evaluation. The schema includes the following features:
 
-## Data Generation Pipeline
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `image_name` | `string` | SHA-256 hashed filename of the primary drawing image. |
+| `image2_name` | `string` | Hashed filename for a secondary image (if applicable). |
+| `question` | `string` | The text of the multiple-choice or open-ended question. |
+| `option_a` | `string` | Distractor / Option A (expertly crafted to avoid language shortcuts). |
+| `option_b` | `string` | Distractor / Option B. |
+| `option_c` | `string` | Distractor / Option C. |
+| `option_d` | `string` | Distractor / Option D. |
+| `answer` | `string` | The correct answer option (e.g., "A", "B", "C", "D" or short text). |
+| `explanation` | `string` | Step-by-step reasoning and explanation provided by the domain expert. |
+| `cv_field` / `cv_subfield` | `list[string]` | MLLM cognitive capability tags (e.g., OCR, Visual Perception, Spatial Reasoning). |
+| `ce_field` / `ce_subfield`| `list[string]` | Construction-Engineering workflow tags (e.g., Quantity Take-Off, Compliance). |
+| `topic_difficulty` | `string` | The reasoning depth required (e.g., R1, R2, R3). |
 
-The main contribution of this work is the scalable pipeline in `data_generation/`:
+*Note: Due to privacy constraints regarding real-world "Issued for Construction" documents, image filenames are hashed and the original high-resolution PDFs/images are kept private. The text-based question set is fully open for evaluation.*
 
-```bash
-cd data_generation
+---
 
-# Optional: Extract LLM response cache (saves API costs)
-tar -xzvf cache.tar.gz
+## 🏆 Leaderboard
 
-# Step 1: Convert allMeSH to parquet (one-time)
-python core_pipeline/allMesh_to_parquet.py
+We evaluated top-tier models and compared them to human experts. As of early 2025, human professionals significantly outperform all SOTA models, especially on tasks requiring Quantity Take-Off (QTO) and Level 3 Expert Reasoning.
 
-# Step 2: Create PubMed corpus (one-time)
-python core_pipeline/make_pubmed_corpus.py
+* **Top Model**: Gemini-3-pro-preview (77.2%) / Gemini-2.5-pro (71.7%)
+* **Human Professional**: 94.9%
+* **Undergraduate Baseline**: 62.8%
 
-# Step 3: Generate Q&A pairs
-python core_pipeline/generate_questions_from_abstracts.py
-```
+For the full leaderboard and fine-grained dual-category breakdowns, visit our [Project Page](https://joonv2.github.io/DrawingVQA/).
 
-**Note**: The `cache.tar.gz` contains cached LLM responses from our data generation run. Extracting it before running Step 3 will significantly reduce API costs by reusing previously generated questions and answers.
+---
 
-See [data_generation/README.md](data_generation/README.md) for full pipeline details.
+## 📝 Citation
 
-## Running Baselines
-
-Evaluate the generated dataset with various baseline methods:
-
-```bash
-# Start retrieval server (for RAG/SearchR1 methods)
-cd search-r1 && bash retrieval_launch_pubmed_bm25.sh && cd ..
-
-# RAG baseline
-python baselines/rag/run_inference.py \
-    --method rag \
-    --model_id Qwen/Qwen2.5-7B-Instruct \
-    --dataset_id PaperSearchQA/PaperSearchQA
-
-# Direct inference or CoT
-python baselines/rag/run_inference.py \
-    --method direct \
-    --model_id Qwen/Qwen2.5-7B-Instruct \
-    --dataset_id PaperSearchQA/PaperSearchQA
-```
-
-See [baselines/README.md](baselines/README.md) for all options and [search-r1/README.md](search-r1/README.md) for retrieval setup.
-
-## Dataset Details
-
-The generated dataset includes 20K training and 5K test examples covering gene/protein identification, disease mechanisms, drug information, and biological processes. Questions are paired with multiple acceptable answer variations (synonyms, abbreviations). BioASQ factoid questions are also included for additional evaluation.
-
-Evaluation uses **Exact Match (EM)** with support for multiple golden answers:
-
-```python
-from verl.utils.reward_score.qa_em import compute_score_em
-
-golden_answers = {"target": ["dystrophin", "DMD protein"]}
-score = compute_score_em("dystrophin", golden_answers)  # 1.0
-```
-
-## Citation
-
-If you use PaperSearchQA in your research, please cite:
+If you use DRAWINGVQA in your research, please cite our CVPR 2025 paper:
 
 ```bibtex
-@misc{burgess2026papersearchqalearningsearchreason,
-      title={PaperSearchQA: Learning to Search and Reason over Scientific Papers with RLVR},
-      author={James Burgess and Jan N. Hansen and Duo Peng and Yuhui Zhang and Alejandro Lozano and Min Woo Sun and Emma Lundberg and Serena Yeung-Levy},
-      year={2026},
-      eprint={2601.18207},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2601.18207},
+@inproceedings{jung2025drawingvqa,
+  title     = {DrawingVQA: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings},
+  author    = {Jung, Yoonhwa and Fu, Junryu and Golparvar-Fard, Mani},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+  year      = {2026},
+  note      = {In press},
+  url       = {[https://joonv2.github.io/DrawingVQA/](https://joonv2.github.io/DrawingVQA/)}
 }
 ```
 
-If you use the Search-R1 retrieval infrastructure, also cite:
+---
 
-```bibtex
-@article{searchr1,
-  title={Search-R1: Train your LLMs to reason and call a search engine with reinforcement learning},
-  author={Jin, Peitian and others},
-  journal={arXiv preprint arXiv:2503.09516},
-  year={2025}
-}
-```
+## 📄 License
 
-And if you use the BioASQ datasets then please cite 
-```bibtex
-@article{krithara2023bioasq,
-  title={BioASQ-QA: A manually curated corpus for Biomedical Question Answering},
-  author={Krithara, Anastasia and Nentidis, Anastasios and Bougiatiotis, Konstantinos and Paliouras, Georgios},
-  journal={Scientific Data},
-  volume={10},
-  number={1},
-  pages={170},
-  year={2023},
-  publisher={Nature Publishing Group UK London}
-}
-
-@article{tsatsaronis2015overview,
-  title={An overview of the BIOASQ large-scale biomedical semantic indexing and question answering competition},
-  author={Tsatsaronis, George and Balikas, Georgios and Malakasiotis, Prodromos and Partalas, Ioannis and Zschunke, Matthias and Alvers, Michael R and Weissenborn, Dirk and Krithara, Anastasia and Petridis, Sergios and Polychronopoulos, Dimitris and others},
-  journal={BMC bioinformatics},
-  volume={16},
-  number={1},
-  pages={138},
-  year={2015},
-  publisher={Springer}
-}
-```
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details. The PubMed corpus is derived from allMeSH (BioASQ 2022). BioASQ evaluation data requires registration at http://bioasq.org/.
-
-## Acknowledgments
-
-Retrieval infrastructure adapted from [Search-R1](https://github.com/PeterGriffinJin/Search-R1). Corpus based on PubMed abstracts and [BioASQ challenge](https://bioasq.org/) data.
-
-
+The text-based question-answer pairs and benchmark metadata are released under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
