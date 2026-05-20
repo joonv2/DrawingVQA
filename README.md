@@ -3,7 +3,7 @@
 [![Paper](https://img.shields.io/badge/arXiv-Coming_Soon-b31b1b)](#)
 [![Website](https://img.shields.io/badge/Project_Page-joonv2.github.io-blue)](https://joonv2.github.io/DrawingVQA/)
 [![Dataset Example](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/datasets/S2-MIND/DrawingVQA)
-[![HuggingFace Leaderboard](https://img.shields.io/badge/-HuggingFace-3B4252?style=flat&logo=huggingface&logoColor=)](https://huggingface.co/spaces/S2-MIND/DrawingVQA-leaderboard)
+[![HuggingFace Leaderboard](https://img.shields.io/static/v1?label=Huggingface&message=AGI-LEADERBOARD&color=%23d4a574&labelColor=%238b6239&logo=HUGGINGFACE&logoColor=%23faf8f5&style=for-the-badge)](https://huggingface.co/spaces/S2-MIND/DrawingVQA-leaderboard)
 
 **[CVPR Findings 2026]** DrawingVQA: A Real-World Benchmark for Multi-Depth Visual–Textual Reasoning on Construction Drawings.
 
