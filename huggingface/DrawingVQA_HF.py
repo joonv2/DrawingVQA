@@ -71,6 +71,9 @@ def normalize(record):
     return {
         "image_name":       hash_name(record.get("image_name")),
         "image2_name":      hash_name(record.get("image2_name")),
+        "image3_name":      hash_name(record.get("image3_name")),
+        "image4_name":      hash_name(record.get("image4_name")),
+        "image5_name":      hash_name(record.get("image5_name")),
         "question":         record.get("question"),
         # Flatten the options dict into individual columns
         "option_a":         options.get("A"),
@@ -116,6 +119,9 @@ normalized = [normalize(r) for r in raw_data]
 features = Features({
     "image_name":       Value("string"),
     "image2_name":      Value("string"),
+    "image3_name":      Value("string"),
+    "image4_name":      Value("string"),
+    "image5_name":      Value("string"),
     "question":         Value("string"),
     "option_a":         Value("string"),
     "option_b":         Value("string"),
