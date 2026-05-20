@@ -1,8 +1,9 @@
-# DRAWINGVQA
+# DrawingVQA
 
 [![Paper](https://img.shields.io/badge/arXiv-Coming_Soon-b31b1b)](#)
 [![Website](https://img.shields.io/badge/Project_Page-joonv2.github.io-blue)](https://joonv2.github.io/DrawingVQA/)
-[![Dataset](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/datasets/S2-MIND/DrawingVQA)
+[![Dataset Example](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/datasets/S2-MIND/DrawingVQA)
+[![HuggingFace Leaderboard](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/spaces/S2-MIND/DrawingVQA-leaderboard)
 
 **[CVPR Findings 2026]** DrawingVQA: A Real-World Benchmark for Multi-Depth Visual–Textual Reasoning on Construction Drawings.
 
@@ -41,11 +42,15 @@ Each record in the dataset is flattened and normalized for easy downstream evalu
 | :--- | :--- | :--- |
 | `image_name` | `string` | SHA-256 hashed filename of the primary drawing image. |
 | `image2_name` | `string` | Hashed filename for a secondary image (if applicable). |
+| `image3_name` | `string` | Hashed filename for a secondary image (if applicable). |
+| `image4_name` | `string` | Hashed filename for a secondary image (if applicable). |
+| `image5_name` | `string` | Hashed filename for a secondary image (if applicable). |
 | `question` | `string` | The text of the multiple-choice or open-ended question. |
 | `option_a` | `string` | Distractor / Option A (expertly crafted to avoid language shortcuts). |
 | `option_b` | `string` | Distractor / Option B. |
 | `option_c` | `string` | Distractor / Option C. |
 | `option_d` | `string` | Distractor / Option D. |
+| `option_e` | `string` | Distractor / Option E (if applicable). |
 | `answer` | `string` | The correct answer option (e.g., "A", "B", "C", "D" or short text). |
 | `explanation` | `string` | Step-by-step reasoning and explanation provided by the domain expert. |
 | `cv_field` / `cv_subfield` | `list[string]` | MLLM cognitive capability tags (e.g., OCR, Visual Perception, Spatial Reasoning). |
