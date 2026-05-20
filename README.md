@@ -27,11 +27,8 @@ DrawingVQA is the first benchmark designed to evaluate multimodal large language
 
 ## 🚀 Quick Start
 
-The dataset and leaderboard is hosted on Hugging Face. You do not need to download local images, as all the text and QA structure is available directly via the Hugging Face.
+The dataset and leaderboard is hosted on Hugging Face. You do not need to download local images, as all evaluation is run directly via the [Hugging Face Leaderboard Page](https://huggingface.co/spaces/S2-MIND/DrawingVQA-leaderboard). To maintain the security and privacy of our real-world IFC-drawing images, we utilize a "Blind Evaluation" API-based architecture. Our private Judge system performs the evaluation without exposing the ground-truth and images to the public. All QA pairs, provided in text format with explanations curated by professionals, are available in this [Dataset](https://huggingface.co/datasets/S2-MIND/DrawingVQA).
 
-```bash
-Coming soon
-```
 ---
 
 ## 📊 Dataset Structure
