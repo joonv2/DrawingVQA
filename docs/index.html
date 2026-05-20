@@ -93,6 +93,77 @@
   .group-reasoning { background-color: #d9edf7; }
   .group-mllm     { background-color: #dff0d8; }
   .group-ce       { background-color: #fcf8e3; }
+
+  /* ── Author popup ── */
+  .author-popup-trigger {
+    cursor: pointer;
+    text-decoration: underline dotted;
+  }
+  .author-popup-trigger:hover {
+    text-decoration: underline;
+  }
+
+  #author-popup {
+    position: absolute;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px;
+    min-width: 210px;
+    background: #2b2b2b;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px) scale(0.97);
+    transition: opacity 150ms ease, transform 150ms ease, visibility 150ms;
+    pointer-events: none;
+  }
+  #author-popup.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  /* Upward caret */
+  #author-popup::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 16px;
+    width: 10px;
+    height: 10px;
+    background: #2b2b2b;
+    border-left: 1px solid rgba(255,255,255,0.12);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    transform: rotate(45deg);
+  }
+
+  .author-popup-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 7px;
+    color: #e8e8e8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 130ms, color 130ms;
+  }
+  .author-popup-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+  .author-popup-link .icon {
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+  .author-popup-link:hover .icon { opacity: 1; }
   </style>
 </style>
 
@@ -110,11 +181,20 @@
 
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="https://joonv2.github.io/">Yoonhwa Jung</a>*<sup>1</sup>,</span>
+                <a class="author-popup-trigger" href="#"
+                   data-website="https://joonv2.github.io/"
+                   data-linkedin="https://www.linkedin.com/in/YOONHWA_LINKEDIN"
+                   data-scholar="https://scholar.google.com/citations?user=YOONHWA_SCHOLAR_ID">Yoonhwa Jung</a>*<sup>1</sup>,</span>
               <span class="author-block">
-                <a href="https://junryuf2.github.io/mywebsite/">Junryu Fu</a>*<sup>2</sup>,</span>
+                <a class="author-popup-trigger" href="#"
+                   data-website="https://junryuf2.github.io/mywebsite/"
+                   data-linkedin="https://www.linkedin.com/in/JUNRYU_LINKEDIN"
+                   data-scholar="https://scholar.google.com/citations?user=JUNRYU_SCHOLAR_ID">Junryu Fu</a>*<sup>2</sup>,</span>
               <span class="author-block">
-                <a href="https://raamac.cee.illinois.edu/">Mani Golparvar-Fard</a><sup>3</sup>
+                <a class="author-popup-trigger" href="#"
+                   data-website="https://raamac.cee.illinois.edu/"
+                   data-linkedin="https://www.linkedin.com/in/MANI_LINKEDIN"
+                   data-scholar="https://scholar.google.com/citations?user=MANI_SCHOLAR_ID">Mani Golparvar-Fard</a><sup>3</sup>
               </span>
             </div>
 
@@ -495,6 +575,77 @@
         disableOnInteraction: true,
       },
     });
+
+    // ── Author popup ──────────────────────────────────────────────
+    (function () {
+      var popup = document.createElement('div');
+      popup.id = 'author-popup';
+      popup.setAttribute('role', 'dialog');
+      popup.setAttribute('aria-label', 'Author links');
+      popup.innerHTML =
+        '<a class="author-popup-link" id="apop-website" href="#" target="_blank" rel="noopener noreferrer">' +
+          '<span class="icon"><i class="fas fa-globe"></i></span>Website' +
+        '</a>' +
+        '<a class="author-popup-link" id="apop-linkedin" href="#" target="_blank" rel="noopener noreferrer">' +
+          '<span class="icon"><i class="fab fa-linkedin"></i></span>LinkedIn' +
+        '</a>' +
+        '<a class="author-popup-link" id="apop-scholar" href="#" target="_blank" rel="noopener noreferrer">' +
+          '<span class="icon"><i class="ai ai-google-scholar"></i></span>Google Scholar' +
+        '</a>';
+      document.body.appendChild(popup);
+
+      var elWebsite  = document.getElementById('apop-website');
+      var elLinkedin = document.getElementById('apop-linkedin');
+      var elScholar  = document.getElementById('apop-scholar');
+      var activeLink = null;
+
+      function openPopup(trigger) {
+        elWebsite.href  = trigger.dataset.website  || '#';
+        elLinkedin.href = trigger.dataset.linkedin || '#';
+        elScholar.href  = trigger.dataset.scholar  || '#';
+
+        var rect  = trigger.getBoundingClientRect();
+        var scrollY = window.scrollY || window.pageYOffset;
+        var scrollX = window.scrollX || window.pageXOffset;
+
+        popup.style.top  = (rect.bottom + scrollY + 10) + 'px';
+        popup.style.left = (rect.left   + scrollX) + 'px';
+        popup.classList.add('is-open');
+        activeLink = trigger;
+
+        // Clamp to right viewport edge
+        requestAnimationFrame(function () {
+          var pr = popup.getBoundingClientRect();
+          var vw = document.documentElement.clientWidth;
+          if (pr.right > vw - 8) {
+            popup.style.left = (vw - pr.width - 8 + scrollX) + 'px';
+          }
+        });
+      }
+
+      function closePopup() {
+        popup.classList.remove('is-open');
+        activeLink = null;
+      }
+
+      document.querySelectorAll('.author-popup-trigger').forEach(function (trigger) {
+        trigger.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          activeLink === trigger ? closePopup() : openPopup(trigger);
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (popup.classList.contains('is-open') && !popup.contains(e.target)) {
+          closePopup();
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closePopup();
+      });
+    }());
   </script>
 
 </body>

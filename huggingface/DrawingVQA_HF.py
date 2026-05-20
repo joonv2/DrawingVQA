@@ -77,6 +77,7 @@ def normalize(record):
         "option_b":         options.get("B"),
         "option_c":         options.get("C"),
         "option_d":         options.get("D"),
+        "option_e":         options.get("E"),
         "answer":           record.get("answer"),
         "explanation":      record.get("explanation"),
         # These are all list fields — wrap bare strings to avoid char-iteration
@@ -120,6 +121,7 @@ features = Features({
     "option_b":         Value("string"),
     "option_c":         Value("string"),
     "option_d":         Value("string"),
+    "option_e":         Value("string"),
     "answer":           Value("string"),
     "explanation":      Value("string"),
     "cv_field":         Sequence(Value("string")),
