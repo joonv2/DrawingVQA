@@ -27,7 +27,6 @@ DrawingVQA is the first benchmark designed to evaluate multimodal large language
 ## 🚀 Quick Start
 
 The dataset and leaderboard is hosted on Hugging Face. You do not need to download local images, as all the text and QA structure is available directly via the Hugging Face.
-### Installation
 
 ```bash
 Coming soon
