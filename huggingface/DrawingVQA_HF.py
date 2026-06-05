@@ -1,6 +1,7 @@
 import json
 import hashlib
 from datasets import Dataset, Features, Value, Sequence
+from huggingface_hub import HfApi
 
 # ============================================================
 # STEP 1: CONFIGURATION — Edit these values
@@ -12,6 +13,9 @@ REPO_ID      = f"{HF_USERNAME}/{DATASET_NAME}"
 
 # Path to your JSON file (list of question objects)
 DATA_FILE = "huggingface/00_DrawingVQA_data.json"
+
+# Path to your local images folder (will be uploaded to data/images/ in the HF repo)
+IMAGE_DIR = "./images"   # <-- change to your actual images folder
 
 
 # ============================================================
@@ -41,7 +45,7 @@ print(f"  Loaded {len(raw_data)} records")
 # ============================================================
 
 def hash_name(name):
-    # Create a unique hash of the name to avoid public from seeing the original name. Use this for any contents / fields that require it. 
+    # Create a unique hash of the name to avoid public from seeing the original name. Use this for any contents / fields that require it.
     if name is None:
         return None
     return hashlib.sha256(name.encode()).hexdigest()[:16]
@@ -92,7 +96,7 @@ def normalize(record):
         "question_type":    record.get("question_type"),
     }
 
-# Preserve the hash mapping structure just in case. 
+# Preserve the hash mapping structure just in case.
 mapping = {
     r["image_name"]: hash_name(r["image_name"]) for r in raw_data if r.get("image_name")
 }
@@ -164,10 +168,10 @@ for i in range(min(3, len(dataset))):
 
 
 # ============================================================
-# STEP 7: UPLOAD TO HUGGING FACE
+# STEP 7: UPLOAD DATASET (metadata + questions) TO HUGGING FACE
 # ============================================================
 
-print(f"\nUploading to HF Hub as: {REPO_ID}")
+print(f"\nUploading dataset to HF Hub as: {REPO_ID}")
 
 dataset.push_to_hub(
     REPO_ID,
@@ -177,3 +181,26 @@ dataset.push_to_hub(
 
 print("\nDone! View your dataset at:")
 print(f"  https://huggingface.co/datasets/{REPO_ID}")
+
+
+# ============================================================
+# STEP 8: UPLOAD IMAGE FOLDER TO data/images/ IN THE HF REPO
+#
+# Images are uploaded as raw files under data/images/ so they
+# can be referenced by their hashed filenames in the dataset.
+# This keeps the dataset viewer working (no inline Image() columns)
+# while still making the images available in the same repo.
+# ============================================================
+
+print(f"\nUploading images from '{IMAGE_DIR}' to data/images/ ...")
+
+api = HfApi()
+api.upload_folder(
+    folder_path=IMAGE_DIR,
+    repo_id=REPO_ID,
+    repo_type="dataset",
+    path_in_repo="data/images",
+)
+
+print("  Images uploaded to data/images/")
+print(f"  Browse at: https://huggingface.co/datasets/{REPO_ID}/tree/main/data/images")
