@@ -11,7 +11,7 @@
 **Authors**: Yoonhwa Jung*, Junryu Fu*, Mani Golparvar-Fard
 (*Equal contribution)
 
-**Paper**: [Link to arXiv (Coming Soon)](#)
+**Paper**: [CVPR 2026 Findings](https://openaccess.thecvf.com/content/CVPR2026F/html/Jung_DrawingVQA_A_Real-World_Benchmark_for_Multi-Depth_Visual-Textual_Reasoning_on_Construction_CVPRF_2026_paper.html)
 
 DrawingVQA is the first benchmark designed to evaluate multimodal large language models (MLLMs) on real-world "Issued for Construction" (IFC) structural drawings. Unlike standard natural images or simplified schematic floor plans, this dataset fuses abstract geometry, symbolic notation, tabular data, annotations, and domain-specific text, reflecting authentic engineering workflows.
 
