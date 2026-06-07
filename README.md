@@ -76,13 +76,13 @@ For the full leaderboard and fine-grained dual-category breakdowns, visit our [P
 If you use DRAWINGVQA in your research, please cite our CVPR 2026 paper:
 
 ```bibtex
-@inproceedings{jung2026drawingvqa,
-  title     = {DrawingVQA: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings},
-  author    = {Jung, Yoonhwa and Fu, Junryu and Golparvar-Fard, Mani},
-  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
-  year      = {2026},
-  note      = {In press},
-  url       = {[https://joonv2.github.io/DrawingVQA/](https://joonv2.github.io/DrawingVQA/)}
+@InProceedings{Jung_2026_CVPR,
+    author    = {Jung, Yoonhwa and Fu, Junryu and Golparvar-Fard, Mani},
+    title     = {DrawingVQA: A Real-World Benchmark for Multi-Depth Visual-Textual Reasoning on Construction Drawings},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+    month     = {June},
+    year      = {2026},
+    pages     = {2121-2130}
 }
 ```
 
