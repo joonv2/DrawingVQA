@@ -1,6 +1,7 @@
 # DrawingVQA
 
-[![Paper](https://img.shields.io/badge/arXiv-Coming_Soon-b31b1b)](#)
+[![Paper](https://img.shields.io/badge/paper-cvpr_2026-blue)](https://openaccess.thecvf.com/content/CVPR2026F/papers/Jung_DrawingVQA_A_Real-World_Benchmark_for_Multi-Depth_Visual-Textual_Reasoning_on_Construction_CVPRF_2026_paper.pdf)
+[![Supplementary](https://img.shields.io/badge/paper-cvpr_2026_supp-blue)](https://openaccess.thecvf.com/content/CVPR2026F/supplemental/Jung_DrawingVQA_A_Real-World_CVPRF_2026_supplemental.pdf)
 [![Website](https://img.shields.io/badge/Project_Page-joonv2.github.io-blue)](https://joonv2.github.io/DrawingVQA/)
 [![Dataset Example](https://img.shields.io/badge/Dataset-HuggingFace-yellow)](https://huggingface.co/datasets/S2-MIND/DrawingVQA)
 [![HuggingFace Leaderboard](https://img.shields.io/badge/-HuggingFace-3B4252?style=flat&logo=huggingface&logoColor=)](https://huggingface.co/spaces/S2-MIND/DrawingVQA-leaderboard)
